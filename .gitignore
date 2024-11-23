@@ -10,3 +10,5 @@ build.sh
 servidor.exe
 a.out
 main_test.c
+*.out
+*.exe
