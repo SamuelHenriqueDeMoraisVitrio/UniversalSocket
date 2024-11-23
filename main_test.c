@@ -65,16 +65,16 @@ void handle_client(int client_socket) {
     free(file_content);
     fclose(file);
 
-    close(client_socket);
+    Universal_close(client_socket);
 }
 
 int main() {
     int server_socket, client_socket;
-    struct sockaddr_in server_addr, client_addr;
+    Universal_socket_addr server_addr, client_addr;
     socklen_t client_addr_size = sizeof(client_addr);
 
     // Cria o socket
-    if ((server_socket = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+    if ((server_socket = Universal_socket(AF_INET, SOCK_STREAM, 0)) == -1) {
         perror("Erro ao criar o socket");
         return 1;
     }
