@@ -1,6 +1,6 @@
 #include "imports.imp.h"
 #ifndef silverchain_types
 #define silverchain_types
-#include "../linux/types.socket_linux.h"
-#include "../windows/types.socket_windows.h"
+#include "../linux/types.socket.h"
+#include "../windows/types.socket.h"
 #endif

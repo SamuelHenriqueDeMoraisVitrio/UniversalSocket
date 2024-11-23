@@ -2,4 +2,6 @@
 #ifndef silverchain_def
 #define silverchain_def
 #include "../all/socket/def.socket.c"
+#include "../linux/def.socket.c"
+#include "../windows/def.socket.c"
 #endif

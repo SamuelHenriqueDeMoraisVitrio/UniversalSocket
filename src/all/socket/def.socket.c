@@ -4,6 +4,6 @@
 #include "../../imports/imports.dec.h"
 //silver_chain_scope_end
 
-int Universal_socket (int __domain, int __type, int __protocol){
-    return socket(__domain,__type,__protocol);
+int Universal_socket (int domain, int type, int protocol){
+    return socket(domain,type,protocol);
 }

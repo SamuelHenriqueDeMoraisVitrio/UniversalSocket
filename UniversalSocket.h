@@ -5,7 +5,7 @@
 
 #include <arpa/inet.h>
 #include <sys/socket.h>
-
+#include <unistd.h>
 #endif
 
 #if defined(_WIN32)
@@ -50,7 +50,9 @@ typedef SOCKET Universal_socket_addr
 
 //silver_chain_scope_end
 
-int Universal_socket (int __domain, int __type, int __protocol);
+int Universal_socket (int domain, int ttype, int protocol);
+
+extern int Universal_close (int fd);
 
 #endif
 
@@ -62,8 +64,33 @@ int Universal_socket (int __domain, int __type, int __protocol);
 
 //silver_chain_scope_end
 
-int Universal_socket (int __domain, int __type, int __protocol){
-    return socket(__domain,__type,__protocol);
+int Universal_socket (int domain, int type, int protocol){
+    return socket(domain,type,protocol);
 }
+
+
+//silver_chain_scope_start
+//mannaged by silver chain
+
+//silver_chain_scope_end
+
+#if defined(__linux__)
+
+extern int Universal_close (int fd){
+    return close(fd);
+}
+#endif
+
+
+//silver_chain_scope_start
+//mannaged by silver chain
+
+//silver_chain_scope_end
+#if defined(_WIN32)
+
+extern int Universal_close (int fd){
+    return closesocket(fd);
+}
+#endif
 
 #endif

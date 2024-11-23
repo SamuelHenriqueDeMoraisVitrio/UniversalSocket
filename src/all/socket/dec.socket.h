@@ -4,4 +4,6 @@
 #include "../../imports/imports.types.h"
 //silver_chain_scope_end
 
-int Universal_socket (int __domain, int __type, int __protocol);
+int Universal_socket (int domain, int ttype, int protocol);
+
+extern int Universal_close (int fd);
