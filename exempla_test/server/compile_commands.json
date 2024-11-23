@@ -1,0 +1,11 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/x86_64-w64-mingw32-gcc",
+      "-c",
+      "server_windows.c"
+    ],
+    "directory": "/home/samuelhdmv/Documentos/UniversalSocket/exempla_test/server",
+    "file": "/home/samuelhdmv/Documentos/UniversalSocket/exempla_test/server/server_windows.c"
+  }
+]
