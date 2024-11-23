@@ -5,5 +5,6 @@
 //silver_chain_scope_end
 #if defined(_WIN32)
 
-typedef SOCKET Universal_socket_addr
+typedef SOCKET Universal_socket_int;
+
 #endif

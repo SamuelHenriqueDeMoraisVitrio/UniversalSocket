@@ -26,8 +26,16 @@
 
 //silver_chain_scope_end
 
+typedef   struct sockaddr_in Universal_socket_addr_in;
+
+
+//silver_chain_scope_start
+//mannaged by silver chain
+
+//silver_chain_scope_end
+
 #if defined(__linux__)
-typedef   struct sockaddr_in Universal_socket_addr;
+typedef int Universal_socket_int;
 #endif
 
 
@@ -37,7 +45,8 @@ typedef   struct sockaddr_in Universal_socket_addr;
 //silver_chain_scope_end
 #if defined(_WIN32)
 
-typedef SOCKET Universal_socket_addr
+typedef SOCKET Universal_socket_int;
+
 #endif
 
 #endif
@@ -54,6 +63,12 @@ int Universal_socket (int domain, int ttype, int protocol);
 
 extern int Universal_close (int fd);
 
+extern ssize_t Universal_recv (int fd, void *buf, size_t n, int flags);
+
+extern ssize_t Universal_send (int fd, const void *buf, size_t n, int flags);
+
+extern int Universal_bind (int fd,Universal_socket_addr_in  *addrin , socklen_t len);
+
 #endif
 
 #ifndef silverchain_def
@@ -66,6 +81,15 @@ extern int Universal_close (int fd);
 
 int Universal_socket (int domain, int type, int protocol){
     return socket(domain,type,protocol);
+}
+extern ssize_t Universal_recv (int fd, void *buf, size_t n, int flags){
+    return recv(fd, buf, n,flags);
+}
+extern ssize_t Universal_send (int fd, const void *buf, size_t n, int flags){
+    return send(fd,buf,n,flags);
+}
+extern int Universal_bind (int fd, Universal_socket_addr_in  *addrin , socklen_t len){
+    return bind(fd,(const struct sockaddr *)addrin,len);
 }
 
 
