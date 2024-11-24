@@ -23,4 +23,19 @@ int Universal_getaddrinfo(const char *node, const char *service, const Universal
 }
 
 
+void Universal_freeaddrinfo(Universal_addrinfo *addrinfo_ptr){
+    freeaddrinfo(addrinfo_ptr);
+}
+
+int Universal_setsockopt(
+    Universal_socket_int sockfd,
+    int level,
+    int optname,
+    const void *optval,
+    Universal_socket_len optlen
+){
+    return setsockopt(sockfd, level, optname, (const char *)optval, optlen);
+}
+
+
 

@@ -4,10 +4,12 @@
 #include "../../../imports/imports.types.h"
 //silver_chain_scope_end
 
-extern int Universal_start_all ();
 
-extern int Universal_close (int fd);
 
-extern int Universal_end ();
+
+
+int Universal_getaddrinfo(const char *node, const char *service, const Universal_addrinfo *hints, Universal_addrinfo **res);
+
+
 
 

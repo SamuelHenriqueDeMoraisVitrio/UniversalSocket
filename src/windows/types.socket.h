@@ -11,4 +11,6 @@
 
 typedef SOCKET Universal_socket_int;
 
+typedef int Universal_socket_len;
+
 #endif

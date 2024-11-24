@@ -13,3 +13,7 @@ extern int Universal_accept (int fd, Universal_sockaddr_in *addrin, Universal_so
 extern int Universal_listen (int fd, int n){
    return  listen(fd,n);
 }
+
+extern int Universal_connect(int sockfd, const Universal_sockaddr *addr, socklen_t addrlen){
+    return connect(sockfd, addr, addrlen);
+}
