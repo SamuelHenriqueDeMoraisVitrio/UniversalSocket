@@ -31,7 +31,6 @@ end
 
 local function get_error(file, error_text)
 
-    
   if not error_text[1] then
     local path = dtw.newPath(file)
     local name = path.get_name()
