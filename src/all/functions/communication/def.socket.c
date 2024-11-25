@@ -23,3 +23,15 @@ extern uint32_t Universal_ntohl(uint32_t netlong){
     return ntohl(netlong);
 }
 
+uint16_t Universal_htons(uint16_t value) {
+    return htons(value);
+}
+
+uint16_t Universal_ntohs(uint16_t value) {
+    return ntohs(value);
+}
+
+extern in_addr_t Universal_inet_addr(const char *ip) {
+  return inet_addr(ip);
+}
+

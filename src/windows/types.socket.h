@@ -15,4 +15,6 @@ typedef int Universal_socket_len;
 
 typedef DWORD Universal_DWORD;
 
+typedef unsigned long in_addr_t;
+
 #endif
