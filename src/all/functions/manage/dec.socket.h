@@ -18,6 +18,14 @@ int Universal_setsockopt(
     Universal_socket_len optlen
 );
 
+int Universal_getsockopt(
+    Universal_socket_int sockfd,
+    int level,
+    int optname,
+    void *optval,
+    Universal_socket_len *optlen
+);
+
 
 
 

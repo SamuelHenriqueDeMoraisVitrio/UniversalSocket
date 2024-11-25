@@ -10,4 +10,6 @@ typedef int Universal_socket_int;
 
 typedef socklen_t Universal_socket_len;
 
+typedef unsigned int Universal_DWORD;
+
 #endif
