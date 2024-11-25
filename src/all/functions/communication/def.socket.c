@@ -18,3 +18,8 @@ extern const char *Universal_inet_ntop(int af, const void *src, char *dst, Unive
 extern int Universal_inet_pton(int af, const char *src, void *dst){
     return inet_pton(af, src, dst);
 }
+
+extern uint32_t Universal_ntohl(uint32_t netlong){
+    return ntohl(netlong);
+}
+

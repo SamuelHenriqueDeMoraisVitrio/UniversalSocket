@@ -12,3 +12,6 @@ extern const char *Universal_inet_ntop(int af, const void *src, char *dst, Unive
 
 extern int Universal_inet_pton(int af, const char *src, void *dst);
 
+uint32_t Universal_ntohl(uint32_t netlong);
+
+
