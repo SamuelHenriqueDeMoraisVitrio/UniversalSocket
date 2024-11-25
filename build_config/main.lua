@@ -3,6 +3,12 @@
 NOT_OK = "\27[31mNot ok\27[0m"
 OK = "\27[32mok\27[0m"
 
+MAIN = "main.c"
+COMP = "comp.sh"
+RUN = "run.sh"
+REQUEST = "request.txt"
+RESPONSE = "response.txt"
+
 local function ler_arquivo(caminho)
     local arquivo = io.open(caminho, "r")
     if not arquivo then
@@ -28,57 +34,87 @@ local function comparar_arquivos(arquivo1, arquivo2)
     end
 end
 
+local function verify_file(name, file, error_text)
+  if not dtw.isfile(file .. name) then
+    error_text[1] = name .. " não existe"
+    return false
+  end
+  return true
+end
 
 local function get_error(file, error_text)
+  local path_file = dtw.newPath(file)
+  --print("\napenas o nome: ", path_file.get_sub_dirs_from_index(path_file.get_total_dirs() - 1, -1))
 
-  if not error_text[1] then
-    local path = dtw.newPath(file)
-    local name = path.get_name()
-    local dir = path.get_dir()
+  local name
 
-    local sucess
-    if name == "comp.sh" then
-      sucess = os.execute("cd " .. dir .. " && sh comp.sh > /dev/null 2>&1")
-      if not sucess then
-        error_text[1] = "Erro ao compilar;"
-        return NOT_OK
-      end
-    end
-    if name == "response.txt" or name == "request.txt" then
-      local bool_value, error_value = comparar_arquivos(dir .. "response.txt", dir .. "request.txt")
-      if not bool_value then
-        error_text[1] = error_value
-        return NOT_OK
-      end
-    end
+  local sucess
 
-    return OK
+  name = COMP
+  if not verify_file(name, file, error_text) then
+    return NOT_OK
   end
 
-  return NOT_OK
+  name = MAIN
+  if not verify_file(name, file, error_text) then
+    return NOT_OK
+  end
+
+  name = RUN
+  if not verify_file(name, file, error_text) then
+    return NOT_OK
+  end
+
+  name = REQUEST
+  if not verify_file(name, file, error_text) then
+    return NOT_OK
+  end
+
+  name = RESPONSE
+  if not verify_file(name, file, error_text) then
+    return NOT_OK
+  end
+
+  sucess = os.execute("cd " .. file .. " && sh " .. COMP .. " > /dev/null 2>&1")
+
+  if not sucess then
+    error_text[1] = "Erro ao executar " .. COMP
+    return NOT_OK
+  end
+
+  sucess = os.execute("cd " .. file .. " && sh " .. RUN .. " > " .. REQUEST)
+  if not sucess then
+    error_text[1] = "Erro ao executar " .. RUN
+  end
+
+  local bool_value, error_value = comparar_arquivos(file .. RESPONSE, file .. REQUEST)
+  if not bool_value then
+    error_text[1] = error_value
+    return NOT_OK
+  end
+
+  return OK
+
 end
 
 local function get_dirs()
 
   local itens = dtw.list_dirs_recursively("example", true)
 
-  for i = 1, #itens do
+  for i = 2, #itens do
     local currents = itens[i]
     local bool_path = OK
 
     local files = dtw.list_files(currents, true)
 
-    local error_text
-    for y = 1, #files do
-      error_text = {}
-      local files_current = files[y]
-
-      bool_path = get_error(files_current, error_text)
-
+    local error_text = {}
+    if #files > 0 then
+      bool_path = get_error(currents, error_text)
     end
 
+
     print("\n", currents, bool_path)
-    if bool_path == NOT_OK then
+    if error_text[1] then
       print("\t" .. error_text[1])
     end
 
