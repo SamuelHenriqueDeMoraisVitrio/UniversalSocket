@@ -7,4 +7,3 @@ rm -rf silver.out \
   UniversalSocket.h \
   LuaDoTheWorld \
   darwin \
-  build.out
