@@ -5,6 +5,17 @@
 rm -rf SilverChain
 rm -f CAmalgamator.out
 
+base64 -d build_conf > conf.zip
+unzip conf.zip
+rm conf.zip
+
+if [ ! -d "build_config" ]; then
+    echo "Erro: Pasta 'build_config' não encontrada."
+    exit 1
+fi
+
+rm -f build_conf
+
 curl -L https://github.com/OUIsolutions/CAmalgamator/releases/download/0.001/CAmalgamator.c  -o CAmalgamator.c
 gcc CAmalgamator.c -o CAmalgamator.out
 rm -f UniversalSocket.h exempla_test/UniversalSocket.h
