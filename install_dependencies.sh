@@ -22,7 +22,6 @@ rm -f UniversalSocket.h exempla_test/UniversalSocket.h
 echo "
 rm -f CAmalgamator.c
 ./CAmalgamator.out --file src/imports/imports.def.h  -o UniversalSocket.h
-cp UniversalSocket.h exempla_test/
 cp UniversalSocket.h example/
 ./darwin build
 ./build.out

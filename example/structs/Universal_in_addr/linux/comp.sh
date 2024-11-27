@@ -1,4 +1,4 @@
 #!/bin/bash
 
-gcc main.c
+gcc ../main.c
 
