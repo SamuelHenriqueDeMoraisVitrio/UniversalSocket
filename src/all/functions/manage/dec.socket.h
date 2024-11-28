@@ -8,7 +8,15 @@ int Universal_socket (int domain, int type, int protocol);
 
 int Universal_ZeroMemory(void *ptr, size_t num);
 
+#if defined(_GET_ADDR_INFO_DEFAULT_)
+
+int Universal_getaddrinfo(const char *node, const char *service, const Universal_addrinfo *hints, Universal_addrinfo **res){
+    return getaddrinfo(node, service, hints, res);
+}
+
 void Universal_freeaddrinfo(Universal_addrinfo *addrinfo_ptr);
+#endif
+
 
 int Universal_setsockopt(
     Universal_socket_int sockfd,
