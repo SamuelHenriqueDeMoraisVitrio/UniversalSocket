@@ -18,4 +18,21 @@ extern int Universal_close (int fd){
     return close(fd);
 }
 
+//#if defined(_GET_ADDR_INFO_DEFAULT_)
+int Universal_getaddrinfo(const char *node, const char *service, const Universal_addrinfo *hints, Universal_addrinfo **res){
+    return getaddrinfo(node, service, hints, res);
+}
+
+
+void Universal_freeaddrinfo(Universal_addrinfo *addrinfo_ptr){
+    freeaddrinfo(addrinfo_ptr);
+}
+//#endif
+
+
+
+
+
 #endif
+
+

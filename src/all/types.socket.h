@@ -18,6 +18,7 @@ typedef struct in_addr Universal_in_addr;
 
 typedef struct in6_addr Universal_in6_addr;
 
+typedef struct hostent Universal_hostent;
 
 
 
