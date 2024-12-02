@@ -2,11 +2,8 @@
 //silver_chain_scope_start
 //mannaged by silver chain
 #include "../../../imports/imports.dec.h"
-#include <netdb.h>
 //silver_chain_scope_end
 
-
-#define _WIN32
 
 
 #if defined(_WIN32)
@@ -30,46 +27,56 @@ int Universal_getaddrinfo(const char *node, const char *service, const Universal
 
 
     if (getaddrinfo) {
-        return getaddrinfo(node, service, hints, res);
+        return Universal_getaddrinfo(node, service, hints, res);
     }
 
-    Universal_hostent *he = Universal_gethostbyname(node);
-    if (he == NULL) {
-        return UNI_EAI_NONAME;
-    }
+    Universal_hostent *he;
 
-    Universal_sockaddr_in *addr = (Universal_sockaddr_in *)malloc(sizeof(Universal_sockaddr_in));
-    if (addr == NULL) {
-        return UNI_EAI_MEMORY;
-    }
+    he = Universal_gethostbyname(node);
 
-    addr->sin_family = UNI_AF_INET;
-    addr->sin_port = (service != NULL) ? Universal_htons(atoi(service)) : 0;
-    memcpy(&addr->sin_addr, he->h_addr, he->h_length);
+    if(he == NULL){
+        return 1;
+    }
 
     *res = (Universal_addrinfo *)malloc(sizeof(Universal_addrinfo));
     if (*res == NULL) {
-        free(addr);
-        return UNI_EAI_MEMORY;
+        return 1;
     }
 
+    (*res)->ai_flags = 0;
     (*res)->ai_family = UNI_AF_INET;
-    (*res)->ai_socktype = (hints != NULL) ? hints->ai_socktype : UNI_SOCK_STREAM;
-    (*res)->ai_protocol = (hints != NULL) ? hints->ai_protocol : UNI_IPPROTO_TCP;
+    (*res)->ai_socktype = UNI_SOCK_STREAM;
+    (*res)->ai_protocol = UNI_IPPROTO_TCP;
     (*res)->ai_addrlen = sizeof(Universal_sockaddr_in);
-    (*res)->ai_addr = (Universal_sockaddr *)addr;
-    (*res)->ai_canonname = NULL;
+
+
+    Universal_sockaddr_in *sa_in = (Universal_sockaddr_in *)malloc(sizeof(Universal_sockaddr_in));
+    if (sa_in == NULL) {
+        free(*res);
+        return 1;
+    }
+
+    Universal_in_addr **addr_list;
+    sa_in->sin_family = UNI_AF_INET;
+    addr_list = (Universal_in_addr **)he->h_addr_list;
+    sa_in->sin_addr = *addr_list[0];
+
+    (*res)->ai_addr = (Universal_sockaddr *)sa_in;
+    (*res)->ai_canonname = strdup(he->h_name);
     (*res)->ai_next = NULL;
 
     return 0;
-
 }
 
 
 void Universal_freeaddrinfo(Universal_addrinfo *addrinfo_ptr){
     if(getaddrinfo){
         freeaddrinfo(addrinfo_ptr);
+        return;
     }
+    free(addrinfo_ptr->ai_addr);
+    free(addrinfo_ptr->ai_canonname);
+    free(addrinfo_ptr);
 }
 //#endif
 

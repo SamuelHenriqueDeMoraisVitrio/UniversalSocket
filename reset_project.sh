@@ -17,7 +17,6 @@ rm -rf silver.out \
   build.sh \
   CAmalgamator* \
   SilverChain \
-  UniversalSocket.h \
   LuaDoTheWorld \
   darwin \
   conf.zip \
