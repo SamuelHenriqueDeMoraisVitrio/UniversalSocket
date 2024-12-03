@@ -1,8 +1,8 @@
 Endereços IP para www.google.com:
 
 	result_inet_ntop:
-2800:3f0:4001:820::2004
+2800:3f0:4004:802:0:0:0:2004
 
 	result_inet_ntop:
-142.250.218.228
+142.250.78.196
 suscefuly
