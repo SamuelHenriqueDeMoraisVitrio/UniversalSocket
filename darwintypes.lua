@@ -1,4 +1,54 @@
 
+---@class LuaShipStartProps
+---@class flags string[]
+---@class volumes string[]string[]
+---@class command string
+
+
+---@class LuaShipMachine
+---@field provider "podman"| "docker"
+---@field docker_file string
+---@field add_comptime_command fun(command:string)
+---@field copy fun(host_data:string,dest_data:string)
+---@field env fun(name:string,value:string)
+---@field save_to_file fun(filename:string)
+---@field start fun(props:LuaShipStartProps)
+
+
+---@class LuaShip
+---@field create_machine fun(distro:string):LuaShipMachine
+---@field open fun(filename:string,mode:string)
+---@field os_execute fun(command:string):boolean
+---@field os_remove fun(filename:string)
+---@field error fun(errror:string)
+
+---@class PrivateDarwinEmbed
+---@field name string
+---@field value table | string | boolean | number | DarwinFileStream
+
+---@class Asset
+---@field path string
+---@field content string
+
+---@class PrivateAmalgamatorCInterop
+---@field generate_amalgamation_simple fun(filename:string,max_content:number,max_recursion:number)
+---@field generate_amalgamation_complex fun(filename:string,max_content:number,max_recursion:number,generator_callback:fun(include:string,path:string):"dont-include"| "dont-change" | "include-once" | "include-perpetual"):string
+---@field CAMALGAMATOR_UNEXPECTED_ERROR number
+---@field CAMALGAMATOR_DONT_INCLUDE number
+---@field CAMALGAMATOR_DONT_CHANGE number
+---@field CAMALGAMATOR_INCLUDE_ONCE number
+---@field CAMALGAMATOR_INCLUDE_PERPETUAL number
+
+
+---@class Amalgamator
+---@field generate_amalgamation fun(filename:string, max_content_size:number | nil,max_recursion:number|nil):string
+---@field generate_amalgamation_with_callback fun(filename:string,verifier_callback:(fun(include:string,path:string):"dont-include"|"dont-change"|"include-once"|"include-perpetual"), max_content_size:number|nil,max_recursion:number|nil):string
+---@field ONE_MB number
+---@field ONE_BYTE number
+
+
+---@field Amalgamator
+private_darwin_camalgamator = private_darwin_camalgamator
 
 ---@class HtmlContent
 ---@field  exist_error boolean
@@ -12,36 +62,88 @@
 ---@type Cadango
 private_darwin_candango = private_darwin_candango
 
----@class Asset
----@field path string
----@field content string | nil
+---@class DarwinCGenerationComplexProps
+---@field include_lua_cembed boolean | nil
+---@field stream fun(data:string)
+
+---@class DarwinCGenerationCodeProps
+---@field include_lua_cembed boolean | nil
+
+---@class DarwinCGenerationFileProps
+---@field include_lua_cembed boolean | nil
+---@field output string
+
+---@class DarwinCLIBGenerationComplexProps
+---@field lib_name string
+---@field object_export string | nil
+---@field include_lua_cembed boolean | nil
+---@field stream fun(data:string)
+
+---@class DarwinCLIBGenerationCodeProps
+---@field lib_name string
+---@field object_export string | nil
+---@field include_lua_cembed boolean | nil
+
+---@class DarwinCLIBGenerationFileProps
+---@field lib_name string
+---@field object_export string | nil
+---@field include_lua_cembed boolean | nil
+---@field output string
 
 ---@type Asset[]
-PRIVATE_DARWIN_ASSETS = PRIVATE_DARWIN_ASSETS
+PRIVATE_DARWIN_API_ASSETS = PRIVATE_DARWIN_API_ASSETS
 
 ---@type string
 PRIVATE_DARWIN_TYPES = PRIVATE_DARWIN_TYPES
 
----@alias DarwinGlobalMode "lua"| "c"
-
 ---@class Darwin
----@field add_lua_code fun(code:string)
----@field add_lua_file fun(filename:string)
----@field generate_lua_code fun():string
----@field generate_lua_output fun(filename:string)
----@field generate_c_executable_code fun():string
----@field generate_c_executable_output fun(filename:string)
----@field add_c_code fun (code:string)
----@field c_include fun (lib:string)
----@field add_c_internal fun(code:string)
----@field load_lualib_from_c fun(function_name:string,object_name:string)
----@field call_c_func fun(function_name:string)
----@field add_c_file fun (filename:string, folow_includes:boolean | nil, include_verifier:fun(import:string,path:string):boolean | nil)
----@field embedglobal fun (name:string, var:any, mode:DarwinGlobalMode|nil)
-
+---@field file_stream fun(src:string):DarwinFileStream
+---@field create_project fun(project_name:string):DarwinProject
+---@field dtw DtwModule
+---@field candango Cadango
+---@field chunk_size number
+---@field argv Argv
+---@field camalgamator Amalgamator
+---@field ship LuaShip
 
 ---@type Darwin
 darwin = darwin
+
+---@class DarwinProject
+---@field lua_code (DarwinFileStream | string)[]
+---@field c_code string[]
+---@field c_calls string[]
+---@field embed_data PrivateDarwinEmbed[]
+---@field c_external_code (DarwinFileStream | string)[]
+---@field c_main_code  (DarwinFileStream | string)[]
+---@field required_funcs DarwinEmbedCode[]
+---@field so_includeds DarwinEmbedCode[]
+---@field project_name string
+
+---- methods
+---@class DarwinProject
+---@field add_c_external_code fun(code:string)
+---@field add_c_include fun(include:string)
+---@field add_c_file fun(filename:string, follow_includes:boolean, verifier_callback:(fun(import:string,path:string):boolean))
+---@field add_c_call fun(func_name:string)
+---@field load_lib_from_c fun(lib_start_func:string, lua_obj:string)
+---@field generate_c_complex fun(props:DarwinCGenerationComplexProps)
+---@field generate_c_code fun(props:DarwinCGenerationCodeProps):string
+---@field generate_c_file fun(props:DarwinCGenerationFileProps)
+---@field generate_c_lib_complex fun(props:DarwinCLIBGenerationComplexProps)
+---@field generate_c_lib_code fun(props:DarwinCLIBGenerationCodeProps):string
+---@field generate_c_lib_file fun(props:DarwinCLIBGenerationFileProps)
+---@field embed_global fun(name:string,value:table | string | number |boolean | DarwinFileStream)
+---@field add_lua_code fun(code:string)
+---@field add_lua_file fun(src:string)
+---@field generate_lua_complex fun(props:LuaGenerationComplexProps)
+---@field generate_lua_code fun(props:LuaGenerationCodeProps):string
+---@field generate_lua_file fun(props:LuaGenerationOutputProps)
+---@field add_lua_file_followin_require fun(src:string,relative_path:string)
+
+---@class DarwinFileStream
+---@field type string
+---@field filename string
 
 ---@class DtwFork
 ---@field sleep_time number
@@ -293,52 +395,138 @@ darwin = darwin
 ---@field get_entity_last_modification fun(entity:string):string | nil
 
 ---@type DtwModule
-dtw = dtw
+private_darwin_dtw = private_darwin_dtw
 
----@class Actions
----@field description string
----@field name string
----@field callback fun()
+-- file: src/types.lua
+
+---@class Argv
+---@field get_flag_size fun(flags:string[]|string):number
+---@field get_flag_arg_by_index fun(flags:string[]|string,index:number,default:string | nil):string|nil
+---@field flags_exist fun(flags:string[]):boolean
+---@field get_flag_size_consider_only_first fun(flags:string[]|string):number
+---@field get_flag_arg_by_index_consider_only_first fun(flags:string[]|string,index:number,default:string | nil):string|nil
+---@field one_of_args_exist fun(arg:string[] | string):boolean
+---@field get_total_args_size fun():number
+---@field get_arg_by_index_not_adding_to_used fun(index:number):string
+---@field get_arg_by_index fun(index:number):string | nil
+---@field get_compact_flags fun(flags:string[]|string,index,default:string | nil):string|nil
+---@field get_compact_flags_size fun(flags:string[]|string):number
+---@field used_args number[]
+---@field type fun(value:any):string
+---@field argslist string[]
+---@field substr_func fun(str:string,start:number,endnum:number):string
+---@field get_str_size fun(str:string):number
+---@field flag_identifiers string[]
+---@field add_used_args_by_index fun(used_flag:number)
+---@field get_total_unused_args fun():number
+---@field get_unsed_arg_by_index fun(index:number):string|nil
+---@field get_next_unused_index fun():number|nil
+---@field get_next_unused fun():string|nil
+
+
+---@class PrivateArgv
+---@field starts_with fun(str:string,target:string):boolean
+---@field get_array_size fun(array:table):number
+---@field is_inside fun(array:table,item:any):boolean
+---@field get_formmated_flag_if_its_a_flag fun(current_arg:string):string |nil
+
+
+
+---@type PrivateArgv
+private_luargv = private_luargv
+
+
+---@type Argv
+luargv = luargv
+
+
+
+---@type PrivateArgv
+private_luargv = private_luargv
+
+
+---@type Argv
+luargv = luargv
+
+---@class LuaGenerationComplexProps
+---@field stream fun(content:string)
+---@field include_embed_data boolean
+
+---@class LuaGenerationCodeProps
+---@field include_embed_data boolean
+
+---@class LuaGenerationOutputProps
+---@field include_embed_data boolean
+---@field output string
 
 ---@class PrivateDarwin
----@field actions Actions[]
----@field is_inside fun(target_table:table,value:any):boolean
----@field main_lua_code string
----@field cglobals_size number
----@field cglobals string
----@field include_code string
----@field c_calls string
----@field require_parse_to_bytes boolean
----@field lua_globals_size  number
----@field lua_globals  string
----@field cglobals_already_setted string[]
----@field create_c_str_buffer fun(str_code:string):string
----@field create_lua_str_buffer fun(str_code:string):string
+---@field get_asset fun(asset_struct:Asset[],src:string):string
+---@field list_assets_recursivly fun(asset_struct:Asset[],src:string):string[]
+---@field list_assets fun(asset_struct:Asset[],src:string):string[]
+---@field is_file_stream fun(item:any):boolean
+---@field transfer_file_stream fun(filestream:DarwinFileStream, stream:fun(data:string))
+---@field transfer_file_stream_bytes fun(filestream:DarwinFileStream, stream:fun(data:string))
+---@field transfer_byte_direct_stream fun(str:string,stream:fun(data:string))
+---@field transfer_byte_internal_format fun(str:string,stream:fun(data:string))
+---@field transfer_byte_size_decide fun(str:string,stream:fun(data:string))
+---@class PrivateDarwin
+---@field is_inside fun(array:any[],value:any):boolean
+---@field count_bars fun(src:string):number
+---@field extract_dir fun(src:string):string
+
+---@class PrivateDarwin
 ---@field is_string_at_point fun(str:string,target:string,point:number):boolean
----@field extract_dir fun(path:string):string
----@field addcfile_internal fun(contents_list:string[], already_included:string[], filename:string, include_verifier:fun(import:string,path:string):boolean)
----@field c_global_concat fun(value:string)
----@field embed_c_table fun(original_name:string, table_name:string, current_table:table)
----@field embed_global_in_c fun(name:string, var:any, var_type:type)
----@field embed_lua_global_concat fun(value:string)
----@field embed_lua_table fun(table_name:string, current_table:table)
----@field embed_global_in_lua fun(name:string, var:any, var_type:type)
----@field print_color fun(color:string,text:string)
----@field print_green fun(text:string)
----@field print_blue fun(text:string)
----@field print_red fun(text:string)
----@field darwin_execcode string
----@field OPEN string
----@field CLOSE string
----@field BREAK_LINE string
----@field PERCENT string
----@field ask_yes_or_no fun(question:string):boolean
----@field list_assets fun(src:string):string[]
----@field list_assets_recursivly fun(src:string):string[]
----@field get_asset fun(path:string):string | nil
 ---@field starts_with fun(str:string,target:string):boolean
----@field count_bars fun(str:string):number
----@field project_name string
+
+
 ---@type PrivateDarwin
 private_darwin = private_darwin
 
+---@class PrivateDarwinProject
+---@field construct_globals fun(selfobj:DarwinProject)
+---@field add_lua_methods fun(selfobj:DarwinProject )
+---@field add_c_external_code fun(selfobj:DarwinProject,code:string)
+---@field add_c_include fun(selfobj:DarwinProject,include:string)
+---@field add_c_file fun(selfobj:DarwinProject,filename:string, follow_includes:boolean, verifier_callback:(fun(import:string,path:string):boolean))
+---@field add_c_call fun(selfobj:DarwinProject,func_name:string)
+---@field load_lib_from_c fun(selfobj:DarwinProject, lib_start_func:string, lua_obj:string)
+---@field create_include_stream fun(self_obj:DarwinProject, include:string, relative_path:DtwSchema):string | nil
+
+---@class PrivateDarwinProject
+---@field add_lua_code fun(selfobj:DarwinProject,code:string)
+---@field add_lua_file fun(selfobj:DarwinProject,src:string)
+---@field is_required_included fun(self_obj:DarwinProject, include:string):boolean
+---@field is_so_includeds fun(self_obj:DarwinProject, include:string):boolean
+---@field add_lua_file_followin_require fun(selfobj:DarwinProject,src:string,relative_path:string)
+---@field add_lua_file_followin_require_recursively fun(selfobj:DarwinProject,src:string,relative_path:string)
+---@field create_c_str_buffer fun(str_code:string,str_shas:string[],stream:fun(data:string)):string
+---@field embed_c_table fun(current_table:table,increment:(fun():number), streamed_shas:string[], stream:fun(data:string)):string
+---@field embed_global_in_c fun(name:string, var:any, streamed_shas:string[], stream:fun(data:string), increment:(fun():string))
+---@field generate_c_complex fun(selfobj:DarwinProject,props:DarwinCGenerationComplexProps)
+---@field generate_c_code fun(selfobj:DarwinProject,props:DarwinCGenerationCodeProps):string
+---@field generate_c_file fun(selfobj:DarwinProject,props:DarwinCGenerationFileProps)
+---@field generate_c_lib_complex fun(selfobj:DarwinProject,props:DarwinCLIBGenerationComplexProps)
+---@field generate_c_lib_code fun(selfobj:DarwinProject,props:DarwinCLIBGenerationCodeProps):string
+---@field generate_c_lib_file fun(selfobj:DarwinProject,props:DarwinCLIBGenerationFileProps)
+
+---@class PrivateDarwinProject
+---@field add_c_methods fun(selfobj:DarwinProject)
+---@field embed_global_in_lua fun(name:string,var:table | number | boolean | string,streammed_shas:string[], stream:fun(data:string))
+---@field embed_table_in_lua fun(name:string,var:table,streamed_shas:string[],stream:fun(data:string))
+---@field create_lua_str_buffer fun(str:string,streamed_shas:string[], stream:fun(data:string)):string
+---@field create_lua_stream_buffer fun(filestream:DarwinFileStream ,streamed_shas:string[], stream:fun(data:string)):string
+
+
+---@class PrivateDarwinProject
+---@field embed_global fun(selfobj:DarwinProject,name:string,value:table | string | boolean | number | DarwinFileStream)
+---@class PrivateDarwinProject
+---@field generate_lua_complex fun(selfobj:DarwinProject,props:LuaGenerationComplexProps)
+---@field generate_lua_code fun(selfobj:DarwinProject,props:LuaGenerationCodeProps):string
+---@field generate_lua_file fun(selfobj:DarwinProject,props:LuaGenerationOutputProps)
+
+---@type PrivateDarwinProject
+private_darwin_project = private_darwin_project
+
+---@class DarwinEmbedCode
+---@field content DarwinFileStream | string
+---@field comptime_included string

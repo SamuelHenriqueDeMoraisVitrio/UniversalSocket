@@ -1,5 +1,0 @@
-addres configured:
-  Family: 2
-  Port: 8080
-  Addres IP: 127.0.0.1
-Successful connection to the server.

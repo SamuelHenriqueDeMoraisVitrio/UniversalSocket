@@ -9,5 +9,3 @@
 
 
 //#define _GET_ADDR_INFO_DEFAULT_
-
-

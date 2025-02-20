@@ -1,3 +1,0 @@
-IPv6 address converted successfully.
-IPv6 address in bytes:
-2001:0db8:0000:0000:0000:ff00:0042:8329

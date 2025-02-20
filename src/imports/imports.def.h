@@ -1,6 +1,6 @@
 #include "imports.dec.h"
-#ifndef silverchain_def
-#define silverchain_def
+#ifndef UniversalSocket_def
+#define UniversalSocket_def
 #include "../all/functions/communication/def.socket.c"
 #include "../all/functions/connections/def.socket.c"
 #include "../all/functions/errors/def.errors.c"

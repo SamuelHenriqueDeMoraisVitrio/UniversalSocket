@@ -1,1 +1,0 @@
-run.sh: linha 3: ./a.out: Arquivo ou diretório inexistente
