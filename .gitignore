@@ -1,4 +1,4 @@
-src/imports
+src/imports*
 silverchain.o
 SilverChain
 server.c
