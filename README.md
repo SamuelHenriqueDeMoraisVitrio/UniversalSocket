@@ -105,7 +105,6 @@ The library defines constants that map to their respective platform's socket API
 
 ```c
 #include "UniversalSocketOne.h"
-#include <sys/socket.h>
 #define PORT 3000
 int main() {
 
