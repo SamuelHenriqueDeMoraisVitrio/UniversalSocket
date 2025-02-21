@@ -2,6 +2,8 @@ src/imports*
 silverchain.o
 SilverChain
 server.c
+UniversalSocket.c
+UniversalSocket.h
 UniversalSocketOne.h
 exempla_test
 silver_run.sh
