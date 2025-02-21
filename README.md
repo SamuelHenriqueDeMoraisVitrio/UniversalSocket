@@ -12,6 +12,19 @@ It supports both IPv4 and IPv6 addresses, as well as TCP, UDP, and raw sockets. 
 - Linux
 - Windows
 
+## Build
+
+Install [darwin]("https://github.com/OUIsolutions/Darwin")
+
+```bash
+curl -L https://github.com/OUIsolutions/Darwin/releases/download/0.020/darwin.out -o darwin && chmod +x darwin
+```
+
+Generate build
+```bash
+./darwin run_blueprint -mode folder build
+```
+
 ## Features
 
 - **Cross-Platform**: Works on both Linux and Windows.
