@@ -12,7 +12,15 @@ It supports both IPv4 and IPv6 addresses, as well as TCP, UDP, and raw sockets. 
 - Linux
 - Windows
 
-## Build
+## Releases
+| item          | What its |
+|-------        |-----------|
+| [UniversalSocketOne.h](https://github.com/SamuelHenriqueDeMoraisVitrio/UniversalSocket/releases/download/V0.2.3/UniversalSocketOne.h)| A single file release, with declarations and definitions all in one (usefull for single uniy compilations)  |
+| [UniversalSocket.c](https://github.com/SamuelHenriqueDeMoraisVitrio/UniversalSocket/releases/download/V0.2.3/UniversalSocket.c)|Definitions |
+| [UniversalSocket.h](https://github.com/SamuelHenriqueDeMoraisVitrio/UniversalSocket/releases/download/V0.2.3/UniversalSocket.h)|Declarations |
+
+
+## Build from scracth
 
 Install [darwin]("https://github.com/OUIsolutions/Darwin")
 
@@ -33,13 +41,6 @@ Generate build
 - **TCP/UDP/Raw Socket Support**: Can create sockets for TCP, UDP, and raw communication.
 - **Socket Options**: Provides functions for setting and getting socket options.
 - **Error Handling**: Unified error handling with platform-specific messages.
-
-## Releases
-| item          | What its |
-|-------        |-----------|
-| [UniversalSocketOne.h](https://github.com/SamuelHenriqueDeMoraisVitrio/UniversalSocket/releases/download/V0.2.3/UniversalSocketOne.h)| A single file release, with declarations and definitions all in one (usefull for single uniy compilations)  |
-| [UniversalSocket.c](https://github.com/SamuelHenriqueDeMoraisVitrio/UniversalSocket/releases/download/V0.2.3/UniversalSocket.c)|Definitions |
-| [UniversalSocket.h](https://github.com/SamuelHenriqueDeMoraisVitrio/UniversalSocket/releases/download/V0.2.3/UniversalSocket.h)|Declarations |
 
 
 ## Functions
