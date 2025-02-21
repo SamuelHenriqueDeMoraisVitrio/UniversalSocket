@@ -1,6 +1,7 @@
 src/imports*
 silverchain.o
 SilverChain
+addre_info.c
 server.c
 UniversalSocket.c
 UniversalSocket.h

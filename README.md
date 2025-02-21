@@ -223,80 +223,65 @@ int main() {
 
 ### Universal_addrinfo
 ```c
+#include "UniversalSocketOne.h"
 
-#include "../../../UniversalSocket.h"
-
+#define PORT 3000
+#define URL  "www.google.com"
 
 int main() {
-  int iResult;
+    int iResult;
 
-  iResult = Universal_start_all();
-  if (iResult != 0) {
-    printf("WSAStartup falhou: %d\n", iResult);
-    return 1;
-  }
+    iResult = Universal_start_all();
+    if (iResult != 0) {
+        printf("Universal_start_all falhou: %d\n", iResult);
+        return 1;
+    }
 
-  Universal_addrinfo hints;
-  Universal_addrinfo *result = NULL;
+    Universal_addrinfo hints;
+    Universal_addrinfo *result = NULL;
+    Universal_addrinfo *ptr = NULL;
 
-  Universal_ZeroMemory(&hints, sizeof(hints));
-  hints.ai_family = UNI_AF_UNSPEC;
-  hints.ai_socktype = UNI_SOCK_STREAM;
-  hints.ai_protocol = UNI_IPPROTO_TCP;
+    Universal_ZeroMemory(&hints, sizeof(hints));
+    hints.ai_family = UNI_AF_UNSPEC;   // Permite IPv4 e IPv6
+    hints.ai_socktype = UNI_SOCK_STREAM;
+    hints.ai_protocol = UNI_IPPROTO_TCP;
 
-  const char *hostname = "www.google.com";
-  const char *port = "80";
+    char port[10] = {0};
+    sprintf(port, "%d", PORT);
 
-  iResult = Universal_getaddrinfo(hostname, port, &hints, &result);
-  if (iResult != 0) {
-    printf("getaddrinfo falhou: %d\n", iResult);
+    iResult = Universal_getaddrinfo(URL, port, &hints, &result);
+    if (iResult != 0) {
+        printf("Universal_getaddrinfo falhou: %d\n", iResult);
+        Universal_end();
+        return 1;
+    }
+
+    printf("IP for %s:\n", URL);
+
+    char ipStr[INET6_ADDRSTRLEN];
+    for (ptr = result; ptr != NULL; ptr = ptr->ai_next) {
+        void *addr;
+        if (ptr->ai_family == UNI_AF_INET) {
+            addr = &((Universal_sockaddr_in *)ptr->ai_addr)->sin_addr;
+        } else if (ptr->ai_family == UNI_AF_INET6) {
+            addr = &((Universal_sockaddr_in6 *)ptr->ai_addr)->sin6_addr;
+        } else {
+            continue;
+        }
+        Universal_inet_ntop(ptr->ai_family, addr, ipStr, sizeof(ipStr));
+
+        if(ptr->ai_family == UNI_AF_INET6){
+            printf("IPV6:%s\n",ipStr);
+        }
+        if(ptr->ai_family == UNI_AF_INET){
+            printf("IPV4:%s\n",ipStr);
+        }
+    }
+
+    Universal_freeaddrinfo(result);
     Universal_end();
-    return 1;
-  }
 
-  printf("Endereços IP para %s:\n", hostname);
-
-  Universal_addrinfo *ptr = result;
-  char ipstr[UNI_INET6_ADDRSTRLEN];
-
-  while (ptr != NULL) {
-    void *addr;
-    const char *ipver;
-
-    if (ptr->ai_family == UNI_AF_INET) {
-      Universal_sockaddr_in *ipv4 = (Universal_sockaddr_in *)ptr->ai_addr;
-      addr = &(ipv4->sin_addr);
-      ipver = "IPv4";
-    } else if (ptr->ai_family == UNI_AF_INET6) {
-      Universal_sockaddr_in6 *ipv6 = (Universal_sockaddr_in6 *)ptr->ai_addr;
-      addr = &(ipv6->sin6_addr);
-      ipver = "IPv6";
-    } else {
-      ptr = ptr->ai_next;
-      continue;
-    }
-
-    const char *result_inet_ntop = Universal_inet_ntop(ptr->ai_family, addr, ipstr, sizeof(ipstr));
-
-    if(result_inet_ntop == NULL){
-      printf("Error in inet_ntop: %s\n", Universal_GetLastError());
-      Universal_freeaddrinfo(result);
-      Universal_end();
-      return 1;
-    }
-
-    ptr = ptr->ai_next;
-
-
-  }
-
-  printf("suscefuly");
-
-  Universal_freeaddrinfo(result);
-
-  Universal_end();
-
-  return 0;
+    return 0;
 }
 
 ```
