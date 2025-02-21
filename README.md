@@ -237,9 +237,8 @@ int main() {
 
 ---
 
-## Example structs
 
-### Universal_addrinfo
+### Getting IP 
 ```c
 #include "UniversalSocketOne.h"
 
