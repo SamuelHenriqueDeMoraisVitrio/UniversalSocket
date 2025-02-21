@@ -15,9 +15,9 @@ It supports both IPv4 and IPv6 addresses, as well as TCP, UDP, and raw sockets. 
 ## Releases
 | item          | What its |
 |-------        |-----------|
-| [UniversalSocketOne.h](https://github.com/SamuelHenriqueDeMoraisVitrio/UniversalSocket/releases/download/V0.2.3/UniversalSocketOne.h)| A single file release, with declarations and definitions all in one (usefull for single uniy compilations)  |
-| [UniversalSocket.c](https://github.com/SamuelHenriqueDeMoraisVitrio/UniversalSocket/releases/download/V0.2.3/UniversalSocket.c)|Definitions |
-| [UniversalSocket.h](https://github.com/SamuelHenriqueDeMoraisVitrio/UniversalSocket/releases/download/V0.2.3/UniversalSocket.h)|Declarations |
+| [UniversalSocketOne.h](https://github.com/SamuelHenriqueDeMoraisVitrio/UniversalSocket/releases/download/V0.2.4/UniversalSocketOne.h)| A single file release, with declarations and definitions all in one (usefull for single uniy compilations)  |
+| [UniversalSocket.c](https://github.com/SamuelHenriqueDeMoraisVitrio/UniversalSocket/releases/download/V0.2.4/UniversalSocket.c)|Definitions |
+| [UniversalSocket.h](https://github.com/SamuelHenriqueDeMoraisVitrio/UniversalSocket/releases/download/V0.2.4/UniversalSocket.h)|Declarations |
 
 
 ## Build from scracth
