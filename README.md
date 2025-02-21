@@ -106,7 +106,7 @@ The library defines constants that map to their respective platform's socket API
 ```c
 #include "UniversalSocketOne.h"
 #include <sys/socket.h>
-#define PORT 3002
+#define PORT 3000
 int main() {
 
 
@@ -175,8 +175,10 @@ int main() {
 ### Client Example (TCP)
 
 ```c
-#include "UniversalSocket.h"
 
+#include "UniversalSocketOne.h"
+#define PORT 3000
+#define IP "127.0.0.1"
 int main() {
     Universal_socket_int client_fd;
     struct sockaddr_in server_addr;
@@ -184,31 +186,36 @@ int main() {
     // Initialize socket
     client_fd = Universal_socket(UNI_AF_INET, UNI_SOCK_STREAM, UNI_IPPROTO_TCP);
     if (client_fd == UNI_INVALID_SOCKET) {
-        printf("Socket creation failed: %s
-", Universal_GetLastError());
+        printf("Socket creation failed: %s", Universal_GetLastError());
         return -1;
     }
 
     // Set server address
     server_addr.sin_family = UNI_AF_INET;
-    server_addr.sin_port = htons(8080);
-    server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    server_addr.sin_port = htons(PORT);
+    server_addr.sin_addr.s_addr = inet_addr(IP);
 
     // Connect to server
     if (Universal_connect(client_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) == UNI_SOCKET_ERROR) {
-        printf("Connection failed: %s
-", Universal_GetLastError());
+        printf("Connection failed: %s", Universal_GetLastError());
         return -1;
     }
+    char buff[9] ={0};
+    while (1) {
+        int size_read = Universal_recv(client_fd, buff,sizeof(buff), MSG_WAITALL);
+        if(size_read <=0){
+            break;
+        }
+        printf("%s",buff);
+    }
 
-    printf("Connected to server!
-");
 
     // Close client socket
     Universal_close(client_fd);
 
     return 0;
 }
+
 ```
 
 ---
