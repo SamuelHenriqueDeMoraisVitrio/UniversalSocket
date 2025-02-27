@@ -22,3 +22,4 @@ darwin
 build_config
 build_config.bak
 client.c
+main.c
