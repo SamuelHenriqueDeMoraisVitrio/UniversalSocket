@@ -24,9 +24,6 @@ extern int Universal_close (int fd){
 
 //#if defined(_GET_ADDR_INFO_DEFAULT_)
 int Universal_getaddrinfo(const char *node, const char *service, const Universal_addrinfo *hints, Universal_addrinfo **res){
-    if (getaddrinfo) {
-        return getaddrinfo(node, service, hints, res);
-    }
 
 
     Universal_hostent *he;
@@ -69,10 +66,7 @@ int Universal_getaddrinfo(const char *node, const char *service, const Universal
 
 
 void Universal_freeaddrinfo(Universal_addrinfo *addrinfo_ptr){
-    if(getaddrinfo){
-        freeaddrinfo(addrinfo_ptr);
-        return;
-    }
+
     free(addrinfo_ptr->ai_addr);
     free(addrinfo_ptr->ai_canonname);
     free(addrinfo_ptr);
