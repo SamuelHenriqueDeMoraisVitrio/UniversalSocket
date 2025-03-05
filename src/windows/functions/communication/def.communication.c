@@ -6,7 +6,6 @@
 #include "../../../imports/imports.dec.h"
 //silver_chain_scope_end
 
-#define _WIN32
 
 #if defined(_WIN32)
 
