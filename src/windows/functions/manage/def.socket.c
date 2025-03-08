@@ -8,6 +8,7 @@
 
 
 
+
 #if defined(_WIN32)
 
 extern int Universal_start_all (){
@@ -17,7 +18,7 @@ extern int Universal_start_all (){
 }
 
 extern int Universal_end (){
-    WSACleanup();
+   return  WSACleanup();
 }
 
 extern int Universal_close (int fd){

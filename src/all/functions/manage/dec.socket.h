@@ -6,6 +6,7 @@
 #include "../../../imports/imports.types.h"
 //silver_chain_scope_end
 
+
 int Universal_socket (int domain, int type, int protocol);
 
 int Universal_ZeroMemory(void *ptr, size_t num);

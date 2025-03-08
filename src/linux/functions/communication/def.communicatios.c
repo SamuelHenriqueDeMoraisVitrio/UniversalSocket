@@ -7,6 +7,7 @@
 //silver_chain_scope_end
 
 
+
 #if defined(__linux__)
 
 extern const char* Universal_inet_ntoa(Universal_in_addr addr) {

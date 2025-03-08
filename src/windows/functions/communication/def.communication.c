@@ -7,6 +7,7 @@
 //silver_chain_scope_end
 
 
+
 #if defined(_WIN32)
 
 extern const char* Universal_inet_ntoa(Universal_in_addr addr) {
@@ -18,10 +19,11 @@ ssize_t private_Universal_recv_all(int fd, void *buf, size_t n){
   int received;
 
   while (max < n) {
-    received = recv(fd, buf + max, n - max, 0);
+    unsigned char *ptr = (unsigned char*)buf + max;
+    received = recv(fd,ptr, n - max, 0);
   
     if (received <= 0) { 
-      return received;
+      return max;
     }
 
     max += received;

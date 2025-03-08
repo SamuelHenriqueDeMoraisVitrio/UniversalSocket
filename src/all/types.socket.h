@@ -6,6 +6,7 @@
 #include "../imports/imports.mac.h"
 //silver_chain_scope_end
 
+
 typedef struct sockaddr Universal_sockaddr;
 
 typedef struct sockaddr_in Universal_sockaddr_in;

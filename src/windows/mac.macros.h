@@ -7,6 +7,7 @@
 //silver_chain_scope_end
 
 
+
 #if defined(_WIN32)
 
 #define UNI_INVALID_SOCKET INVALID_SOCKET
