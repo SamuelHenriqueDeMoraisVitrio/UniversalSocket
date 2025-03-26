@@ -9,7 +9,7 @@
 
 
 extern ssize_t Universal_send (int fd, const void *buf, size_t n, int flags){
-    return send(fd,buf,n,flags);
+    return send(fd,(char*)buf,n,flags);
 }
 
 #if !defined(_DEFAULT_INET_PTON_AND_INET_NTOP_)

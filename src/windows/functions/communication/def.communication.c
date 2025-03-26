@@ -20,7 +20,7 @@ ssize_t private_Universal_recv_all(int fd, void *buf, size_t n){
 
   while (max < n) {
     unsigned char *ptr = (unsigned char*)buf + max;
-    received = recv(fd,ptr, n - max, 0);
+    received = recv(fd,(char*)ptr, n - max, 0);
   
     if (received <= 0) { 
       return max;
@@ -38,7 +38,7 @@ extern ssize_t Universal_recv (int fd, void *buf, size_t n, int flags){
     return private_Universal_recv_all(fd, buf, n);
   }
 
-  return recv(fd, buf, n, flags);
+  return recv(fd, (char*)buf, n, flags);
 }
 
 #endif
