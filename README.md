@@ -178,7 +178,7 @@ int main() {
         "\r\n"
         "Hello, World!";
 
-   Universal_send(client_fd,response, sizeof(response)-1,MSG_WAITALL);
+   Universal_send(client_fd,response, sizeof(response)-1,UNI_MSG_WAITALL);
 
     // Close server socket
     Universal_close(server_fd);
