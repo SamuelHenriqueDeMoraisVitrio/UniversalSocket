@@ -17,7 +17,7 @@ extern char *Universal_GetLastError(){
 
   DWORD dwError = WSAGetLastError();
   if (dwError == 0) {
-      return "Nenhum erro";
+      return (char*)"Nenhum erro";
   }
 
   FormatMessage(
