@@ -11,6 +11,7 @@ It supports both IPv4 and IPv6 addresses, as well as TCP, UDP, and raw sockets. 
 
 - Linux
 - Windows
+- MAC 
 
 ## Releases
 | item          | What its |
